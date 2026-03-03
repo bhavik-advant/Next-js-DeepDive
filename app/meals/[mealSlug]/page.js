@@ -3,18 +3,23 @@ import classes from './page.module.css'
 import { getMeal } from '@/lib/meals'
 import { notFound } from 'next/navigation';
 
-export default function MealsDetailsPage({params}) {
+export default function MealsDetailsPage({ params }) {
 
-    const meal =  getMeal(params.mealSlug);
-    if(!meal){
+    const meal = getMeal(params.mealSlug);
+    if (!meal) {
         notFound();
     }
-    meal.instructions = meal.instructions.replace(/\n/g,'<br />')
+    meal.instructions = meal.instructions.replace(/\n/g, '<br />')
     return (
         <>
             <header className={classes.header}>
                 <div className={classes.image}>
-                    <Image src={meal.image} alt={meal.title} fill />
+                    {/* <Image src={meal.image} alt={meal.title} fill /> */}
+                    <Image
+                        src={`https://bhavik-nextjs-demo-users-image.s3.eu-north-1.amazonaws.com/${meal.image}`}
+                        alt={meal.title}
+                        fill
+                    />
 
                 </div>
                 <div className={classes.headerText}>
@@ -29,10 +34,10 @@ export default function MealsDetailsPage({params}) {
 
             </header>
             <main>
-                <p className={classes.instructions} 
-                dangerouslySetInnerHTML={{
-                    __html: meal.instructions,
-                }}>
+                <p className={classes.instructions}
+                    dangerouslySetInnerHTML={{
+                        __html: meal.instructions,
+                    }}>
 
                 </p>
 

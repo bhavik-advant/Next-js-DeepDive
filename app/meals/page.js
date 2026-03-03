@@ -4,7 +4,23 @@ import MealsGrid from '../components/meals/meals-grid'
 import { getMeals } from '@/lib/meals'
 import { Suspense } from 'react';
 import MealsLoadingPage from './loading-out';
+import { notFound } from 'next/navigation';
 
+// export const metadata = {
+//     title: "Meals | NextLevel Food "
+// }
+export async function generateMetadata({params}){
+    const meal = getMeals(params.mealSlug);
+
+    if(!meal){
+        notFound();
+    }
+
+    return {
+        title : meal.title,
+        description : meal.summary,
+    }
+}
 async function Meals() {
     const meals = await getMeals();
 
